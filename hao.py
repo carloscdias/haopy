@@ -4,7 +4,7 @@ from argparse import ArgumentParser
 from hackalunoonline import HackAlunoOnline
 from threading import Thread
 
-# Programa para recuperar os dados de um aluno da UERJ através de sua matrícula
+# Programa para recuperar os dados de um aluno da UERJ atraves de sua matricula
 
 def get_matriculas_by_name( name ):
 	indices    = []

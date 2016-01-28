@@ -45,11 +45,11 @@ class HackAlunoOnline:
 		return cra
 
 	def __str__( self ):
-		pattern    = "{0}\t{1}\t{2}"
+		pattern    = "{0}\t{1:40}\t{2}"
 		parameters = [ self.matricula , self.name , self.cra ]
 		
 		if self.verbose_output:
-			pattern = "-----------------\nMatrícula: {0}\nNome: {1}\nCRA: {2}"
+			pattern = "-----------------\nMatricula: {0}\nNome: {1}\nCRA: {2}"
 		
 		if self.uerj_pdf_files:
 			pattern += "\nUERJ PDF's: {3}" if self.verbose_output else "\t{3}"
