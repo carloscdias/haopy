@@ -7,26 +7,22 @@ from threading import Thread
 # Programa para recuperar os dados de um aluno da UERJ atraves de sua matricula
 
 def get_matriculas_by_name( name ):
-	indices    = []
 	matriculas = []
+	
+	arquivoMatriculas = open( 'matriculas-2015.2.txt' , 'r' )
 
-	with open( 'nomes-2015.2.txt' , 'r' ) as file:
-		for index, line in enumerate( file ) :
-			if name in line.strip( '\n' ).lower():
-				indices.append( index )
-
-	file = open( 'matriculas-2015.2.txt' , 'r' )
-
-	for indice in indices:
-		file.seek( indice * 13 )
-		matriculas.append( file.readline() )
+	with open( 'nomes-2015.2.txt' , 'r' ) as arquivoNomes:
+		for index, line in enumerate( arquivoNomes ) :
+			if name in line.lower():
+				arquivoMatriculas.seek( index * 13 )
+				matriculas.append( arquivoMatriculas.readline() )
 		
-	file.close()
+	arquivoMatriculas.close()
 
 	return matriculas
 
 def get_data( matricula , verbose , uerjlinks ):
-	hao = HackAlunoOnline( matricula.strip( '\n' ) , verbose , uerjlinks )
+	hao = HackAlunoOnline( matricula , verbose , uerjlinks )
 	print( hao )
 
 def Main():
@@ -52,7 +48,7 @@ def Main():
 		matriculas.append( args.matricula )
 
 	for matricula in matriculas:
-		thread = Thread( target = get_data , args = ( matricula , args.verbose , args.uerjlinks ) )
+		thread = Thread( target = get_data , args = ( matricula.strip( '\n' ) , args.verbose , args.uerjlinks ) )
 		thread.start()
 
 # End Main
