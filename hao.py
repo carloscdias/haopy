@@ -31,9 +31,9 @@ def Main():
 	parser.add_argument( 'matricula' , help = "Matricula do aluno" )
 
 	parser.add_argument( '-i' , '--inputfile' , help = "Utilizar um arquivo contendo uma lista de matriculas com uma matricula por linha como entrada" , action = "store_true" )
-	parser.add_argument( '-v' , '--verbose' , help = "Saida com mais conteudo textual" , action = "store_true" )
+	parser.add_argument( '-v' , '--verbose'   , help = "Saida com mais conteudo textual" , action = "store_true" )
 	parser.add_argument( '-u' , '--uerjlinks' , help = "Links de pdfs da uerj (Em geral arquivos de classificacao no vestibular)" , action = "store_true" )
-	parser.add_argument( '-r' , '--reverse' , help = "Procura reversa -> busca matricula por nome (para alunos do IPRJ)" , action = "store_true" )
+	parser.add_argument( '-r' , '--reverse'   , help = "Procura reversa -> busca matricula por nome (para alunos do IPRJ)" , action = "store_true" )
 	
 	args = parser.parse_args()
 
@@ -47,9 +47,15 @@ def Main():
 	else:
 		matriculas.append( args.matricula )
 
-	for matricula in matriculas:
-		thread = Thread( target = get_data , args = ( matricula.strip( '\n' ) , args.verbose , args.uerjlinks ) )
-		thread.start()
+	if ( not matriculas ):
+		print( "Nao foram encontrados dados para esta matricula" )
+	else:
+		if ( not args.verbose ):
+			print( "{0:12}\t{1:30}\t{2:20}\t{3:10}\t{4:2}\t{5:4}".format( "Matricula", "Nome", "Curso" , "Situacao" , "Periodo" , "CRA" ) )
+
+		for matricula in matriculas:
+			thread = Thread( target = get_data , args = ( matricula.strip( '\n' ) , args.verbose , args.uerjlinks ) )
+			thread.start()
 
 # End Main
 
