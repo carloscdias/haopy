@@ -59,11 +59,18 @@ class HackAlunoOnline:
 			self.disciplinas                 = self._extract_disciplinas()
 
 	def _get_aluno_online_html( self , endpoint , parameters = {} ):
-		parameters.update( { 'matricula': self.matricula } )
-		data     = urlencode( parameters )
-		request  = Request( self.aluno_online_url + endpoint , data.encode( 'ascii' ) )
-		response = urlopen( request )
-		return BeautifulSoup( response.read() , 'html.parser' )
+		result = None
+		
+		try:
+			parameters.update( { 'matricula': self.matricula } )
+			data     = urlencode( parameters )
+			request  = Request( self.aluno_online_url + endpoint , data.encode( 'ascii' ) )
+			response = urlopen( request )
+			result   = BeautifulSoup( response.read() , 'html.parser' )
+		except:
+			pass
+		
+		return result
 
 	def _extract_nome( self ):
 		try:
